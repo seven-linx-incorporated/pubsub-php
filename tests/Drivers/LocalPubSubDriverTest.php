@@ -23,15 +23,17 @@ final class LocalPubSubDriverTest extends TestCase
 
         $handler1 = Mockery::mock(stdClass::class);
         $handler1->shouldReceive('handle')
-            ->with($message, $message->message(), $message->toString())
+            ->with($message, $message->payload())
             ->once();
         $driver->subscribe($channel, [$handler1, 'handle']);
 
-        $handler3 = Mockery::mock(stdClass::class);
-        $handler3->shouldNotReceive('handle');
-        $driver->subscribe($channel, [$handler3, 'handle']);
+        $handler2 = Mockery::mock(stdClass::class);
+        $handler2->shouldNotReceive('handle');
+        $driver->subscribe($channel, [$handler2, 'handle']);
 
         $driver->publish($channel, $message);
+
+        self::assertCount(2, $driver->getSubscriber($channel));
     }
 
     public function testSubscribe(): void

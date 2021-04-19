@@ -9,6 +9,6 @@ final class WithHandlerStub
 {
     public function handle(MessageContract $message): void
     {
-        $message->message();
+        $message->payload();
     }
 }

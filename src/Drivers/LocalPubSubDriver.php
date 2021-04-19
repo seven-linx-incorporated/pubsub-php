@@ -9,8 +9,6 @@ use SevenLinX\PubSub\Contracts\HasPriorityHandler;
 use SevenLinX\PubSub\Contracts\MessageContract;
 use SevenLinX\PubSub\PubSubDriverInterface;
 
-use function PHPUnit\Framework\callback;
-
 final class LocalPubSubDriver implements PubSubDriverInterface
 {
     /**
@@ -26,13 +24,7 @@ final class LocalPubSubDriver implements PubSubDriverInterface
     private function priorities(Collection $collection): array
     {
         return $collection
-            ->sort(function ($handler) {
-                if ($handler instanceof HasPriorityHandler) {
-                    return $handler->priority();
-                }
-
-                return 0;
-            })
+            ->sort(fn($handler) => $handler instanceof HasPriorityHandler ? $handler->priority() : 0)
             ->values()
             ->toArray();
     }
@@ -44,7 +36,7 @@ final class LocalPubSubDriver implements PubSubDriverInterface
 
         foreach ($handlers as $handler) {
             if (is_callable($handler) === true) {
-                $handler($message, $message->message(), $message->toString());
+                $handler($message, $message->payload());
             }
         }
     }

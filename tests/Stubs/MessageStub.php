@@ -12,12 +12,7 @@ final class MessageStub implements MessageContract
      */
     private const MESSAGE = 'message';
 
-    public function message(): mixed
-    {
-        return self::MESSAGE;
-    }
-
-    public function toString(): string
+    public function payload(): string
     {
         return self::MESSAGE;
     }

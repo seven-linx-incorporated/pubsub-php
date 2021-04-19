@@ -5,7 +5,5 @@ namespace SevenLinX\PubSub\Contracts;
 
 interface MessageContract
 {
-    public function message(): mixed;
-
-    public function toString(): string;
+    public function payload(): string;
 }
