@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace SevenLinX\PubSub\Tests\Stubs;
+namespace SevenLinX\PubSub\Stubs;
 
 use SevenLinX\PubSub\Contracts\ChannelContract;
 

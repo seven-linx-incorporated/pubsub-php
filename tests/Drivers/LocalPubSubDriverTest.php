@@ -7,10 +7,10 @@ use Closure;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use SevenLinX\PubSub\Drivers\LocalPubSubDriver;
-use SevenLinX\PubSub\Tests\Stubs\ChannelStub;
+use SevenLinX\PubSub\Stubs\ChannelStub;
+use SevenLinX\PubSub\Stubs\MessageStub;
 use SevenLinX\PubSub\Tests\Stubs\LocalHandlerStub;
 use SevenLinX\PubSub\Tests\Stubs\LocalHandlerWithPriorityStub;
-use SevenLinX\PubSub\Tests\Stubs\MessageStub;
 use stdClass;
 
 final class LocalPubSubDriverTest extends TestCase
