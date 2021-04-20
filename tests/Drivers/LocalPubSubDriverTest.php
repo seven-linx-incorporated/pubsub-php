@@ -7,25 +7,29 @@ use Closure;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use SevenLinX\PubSub\Drivers\LocalPubSubDriver;
-use SevenLinX\PubSub\Stubs\ChannelStub;
-use SevenLinX\PubSub\Stubs\MessageStub;
+use SevenLinX\PubSub\Generics\GenericChannel;
+use SevenLinX\PubSub\Generics\GenericMessage;
+use SevenLinX\PubSub\Generics\GenericPayload;
 use SevenLinX\PubSub\Tests\Stubs\LocalHandlerStub;
 use SevenLinX\PubSub\Tests\Stubs\LocalHandlerWithPriorityStub;
 use stdClass;
 
+/**
+ * @covers \SevenLinX\PubSub\Drivers\LocalPubSubDriver
+ */
 final class LocalPubSubDriverTest extends TestCase
 {
     public function testPublish(): void
     {
-        $channel = new ChannelStub();
+        $channel = new GenericChannel();
         $driver = new LocalPubSubDriver();
-        $message = new MessageStub();
+        $message = new GenericMessage();
 
         $handler1 = Mockery::mock(stdClass::class);
         $handler1->shouldReceive('handle')
-            ->with($message, $message->payload())
+            ->with(GenericPayload::class)
             ->once();
-        $driver->subscribe($channel, [$handler1, 'handle']);
+        $driver->subscribe($channel, [$handler1::class, 'handle']);
 
         $handler2 = Mockery::mock(stdClass::class);
         $handler2->shouldNotReceive('handle');
@@ -39,7 +43,7 @@ final class LocalPubSubDriverTest extends TestCase
     public function testSubscribe(): void
     {
         $driver = new LocalPubSubDriver();
-        $channel = new ChannelStub();
+        $channel = new GenericChannel();
 
         $driver->subscribe($channel, new LocalHandlerStub());
         $driver->subscribe($channel, new LocalHandlerWithPriorityStub());

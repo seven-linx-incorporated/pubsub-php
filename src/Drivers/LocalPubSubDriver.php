@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use SevenLinX\PubSub\Contracts\ChannelContract;
 use SevenLinX\PubSub\Contracts\HasPriorityHandler;
 use SevenLinX\PubSub\Contracts\MessageContract;
+use SevenLinX\PubSub\Generics\GenericPayload;
 use SevenLinX\PubSub\PubSubDriverInterface;
 
 final class LocalPubSubDriver implements PubSubDriverInterface
@@ -36,7 +37,7 @@ final class LocalPubSubDriver implements PubSubDriverInterface
 
         foreach ($handlers as $handler) {
             if (is_callable($handler) === true) {
-                $handler($message, $message->payload());
+                $handler(new GenericPayload($message->payload(), $channelName));
             }
         }
     }

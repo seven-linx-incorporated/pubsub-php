@@ -24,10 +24,10 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
         "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^0.12.83",
-        "phpstan/phpstan-mockery": "^0.12.13"
+        "phpstan/phpstan-mockery": "^0.12.13",
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "branch-alias": {
@@ -40,5 +40,13 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyze --ansi --memory-limit=2G",
+        "phpunit": "vendor/bin/phpunit",
+        "testing": [
+            "@phpstan",
+            "@phpunit"
+        ]
+    }
 }
