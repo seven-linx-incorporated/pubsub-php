@@ -10,7 +10,7 @@ final class GenericChannel implements ChannelContract
     /**
      * @var string
      */
-    private const DEFAULT_NAME = 'test';
+    public const DEFAULT_CHANNEL = 'test';
 
     public function __construct(private ?string $channel = null)
     {
@@ -18,6 +18,6 @@ final class GenericChannel implements ChannelContract
 
     public function name(): string
     {
-        return $this->channel ?? self::DEFAULT_NAME;
+        return $this->channel ?? self::DEFAULT_CHANNEL;
     }
 }

@@ -66,13 +66,11 @@ $driver->subscribe($channel, function ($message) {
 });
 // Using class with __invoke method
 $driver->subscribe($channel, new MyOwnHandler());
-// Or by custom method name
-$driver->subscribe($channel, [MyOwnHandler::class, 'handler']);
 ```
 
 ## Publish
 
-Publish a message
+Publish a single message
 
 Example:
 
@@ -80,6 +78,13 @@ Example:
 ...
 
 $driver->publish($channel, new MyOwnMessage());
+```
+
+You can also publish multiple or in batch
+
+```php
+...
+$driver->publishBatch($channel, new MyOwnMessage(), new MyOtherMessage(), new GenericMessage());
 ```
 
 ## Payload
@@ -142,6 +147,8 @@ You can the example in `example/` directory or run:
 ```sh
 php example/example.php
 ```
+
+* * *
 
 ## Testing
 

@@ -10,7 +10,7 @@ final class GenericMessage implements MessageContract
     /**
      * @var string
      */
-    private const DEFAULT_MESSAGE = 'message';
+    public const DEFAULT_MESSAGE = 'message';
 
     public function __construct(private ?string $message = null)
     {

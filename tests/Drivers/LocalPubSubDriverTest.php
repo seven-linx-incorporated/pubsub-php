@@ -11,7 +11,6 @@ use SevenLinX\PubSub\Generics\GenericChannel;
 use SevenLinX\PubSub\Generics\GenericMessage;
 use SevenLinX\PubSub\Generics\GenericPayload;
 use SevenLinX\PubSub\Tests\Stubs\LocalHandlerStub;
-use SevenLinX\PubSub\Tests\Stubs\LocalHandlerWithPriorityStub;
 use stdClass;
 
 /**
@@ -46,16 +45,14 @@ final class LocalPubSubDriverTest extends TestCase
         $channel = new GenericChannel();
 
         $driver->subscribe($channel, new LocalHandlerStub());
-        $driver->subscribe($channel, new LocalHandlerWithPriorityStub());
         $driver->subscribe($channel, function () {
             return 'hey';
         });
 
         $subscriber = $driver->getSubscriber($channel);
 
-        self::assertCount(3, $subscriber);
+        self::assertCount(2, $subscriber);
         self::assertInstanceOf(LocalHandlerStub::class, $subscriber[0]);
-        self::assertInstanceOf(LocalHandlerWithPriorityStub::class, $subscriber[2]);
         self::assertInstanceOf(Closure::class, $subscriber[1]);
     }
 }

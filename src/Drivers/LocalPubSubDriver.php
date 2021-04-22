@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace SevenLinX\PubSub\Drivers;
 
-use Illuminate\Support\Collection;
+use Closure;
 use SevenLinX\PubSub\Contracts\ChannelContract;
-use SevenLinX\PubSub\Contracts\HasPriorityHandler;
 use SevenLinX\PubSub\Contracts\MessageContract;
 use SevenLinX\PubSub\Generics\GenericPayload;
 use SevenLinX\PubSub\PubSubDriverInterface;
@@ -17,17 +16,12 @@ final class LocalPubSubDriver implements PubSubDriverInterface
      */
     private array $subscribers = [];
 
+    /**
+     * @return callable[]
+     */
     public function getSubscriber(ChannelContract $channel): array
     {
         return $this->subscribers[$channel->name()];
-    }
-
-    private function priorities(Collection $collection): array
-    {
-        return $collection
-            ->sort(fn($handler) => $handler instanceof HasPriorityHandler ? $handler->priority() : 0)
-            ->values()
-            ->toArray();
     }
 
     public function publish(ChannelContract $channel, MessageContract $message): void
@@ -56,9 +50,7 @@ final class LocalPubSubDriver implements PubSubDriverInterface
         if (isset($this->subscribers[$channelName]) === false) {
             $this->subscribers[$channelName] = [];
         }
-        $subscribers = Collection::make($this->subscribers[$channelName]);
-        $subscribers->add($handler);
 
-        $this->subscribers[$channelName] = $this->priorities($subscribers);
+        $this->subscribers[$channelName][] = $handler;
     }
 }

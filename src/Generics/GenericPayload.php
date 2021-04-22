@@ -4,21 +4,16 @@ declare(strict_types=1);
 namespace SevenLinX\PubSub\Generics;
 
 use JsonException;
-use SevenLinX\PubSub\Contracts\PayloadContract;
 
 use function json_decode;
 
 use const JSON_THROW_ON_ERROR;
 
-final class GenericPayload implements PayloadContract
+final class GenericPayload extends AbstractPayload
 {
-    public function __construct(private mixed $payload, private string $channel)
+    public function __construct(private mixed $payload, string $channel)
     {
-    }
-
-    public function getChannel(): string
-    {
-        return $this->channel;
+        parent::__construct($channel);
     }
 
     public function payload(): mixed
